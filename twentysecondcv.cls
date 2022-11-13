@@ -32,6 +32,16 @@
 \RequirePackage{pgffor}
 \RequirePackage{marvosym}
 \RequirePackage{parskip}
+%MY STUFF
+\RequirePackage[					% typographic tuning
+	activate={true,nocompatibility},
+	final,
+	tracking=true,
+	kerning=true,
+	spacing=true]
+{microtype}
+\RequirePackage{pdfpages}
+
 
 %%%%%%%%%%%
 % OPTIONS %
@@ -49,6 +59,17 @@
 \ifbool{icon}{\RequirePackage{fontawesome}}{}
 
 \usetikzlibrary{calc}
+
+%%%% MY STUFF
+%%%%
+% Define custom commands to display a link to course contents
+\newcommand{\coursecontents}[1]{
+	\href{#1}{\faList~Kursinhalte}
+}
+
+% Define custom file paths
+\newcommand{\PathToScannedDocs}{D:/Bibliotheken/Dokumente/Arbeit/Bewerbung/gescannte-Formulare}
+
 
 %%%%%%%%%%
 % colors %
@@ -121,6 +142,10 @@
 \newcommand{\givenprofilepic}{}      % picture
 \newcommand{\givencvsite}{}          % site
 \newcommand{\givencvjobtitle}{}      % job title
+
+% MY STUFF
+\newcommand{\cvxing}[1]{\renewcommand{\givencvxing}{#1}}
+\newcommand{\givencvxing}{}
 
 % icon in blue circle; #1 -> icon
 \newcommand*\icon[1]{\tikz[baseline=(char.base)]{
@@ -292,7 +317,7 @@
 }
 \renewcommand{\bfseries}{\color{headercolor}}
 \newcommand{\twentyitem}[4]{%
-  \hspace{5pt}#1&\parbox[t]{11.5cm}{%
+  \hspace{5pt}#1&\parbox[t]{11cm}{%
     \textbf{#2}%
     \hfill%
     {\footnotesize#3}\\%
@@ -326,7 +351,7 @@
 }
 \renewcommand{\bfseries}{\color{headercolor}}
 \newcommand{\twentyitemshort}[2]{%
-  \hspace{5pt}#1&\parbox[t]{11.5cm}{%
+  \hspace{5pt}#1&\parbox[t]{11cm}{%
     \textbf{#2}%
   }\\%
 }
@@ -349,3 +374,15 @@
 %%%%%%%%%%%%%%%%
 \RequirePackage[left=7.3cm,top=0.1cm,right=0.5cm,bottom=0.2cm,nohead,nofoot]{geometry}
 \RequirePackage{hyperref}
+
+%% MY STUFF
+\newenvironment{changemargin}[2]{%
+\begin{list}{}{%
+\setlength{\topsep}{0pt}%
+\setlength{\leftmargin}{#1}%
+\setlength{\rightmargin}{#2}%
+\setlength{\listparindent}{\parindent}%
+\setlength{\itemindent}{\parindent}%
+\setlength{\parsep}{\parskip}%
+}%
+\item[]}{\end{list}}
