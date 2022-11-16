@@ -41,6 +41,8 @@
 	spacing=true]
 {microtype}
 \RequirePackage{pdfpages}
+\RequirePackage{simpleicons}
+
 
 
 %%%%%%%%%%%
@@ -128,10 +130,11 @@
 \newcommand{\cvnumberphone}[1]{\renewcommand{\givennumberphone}{#1}}    % phone
 \newcommand{\cvaddress}[1]{\renewcommand{\givencvaddress}{#1}}          % address
 \newcommand{\cvsite}[1]{\renewcommand{\givencvsite}{#1}}                % site
-\newcommand{\aboutme}[1]{\renewcommand{\givenaboutme}{  \justifying#1}} % about me
+\newcommand{\aboutme}[1]{\renewcommand{\givenaboutme}{\justifying#1}}   % about me
 \newcommand{\profilepic}[1]{\renewcommand{\givenprofilepic}{#1}}        % picture
 \newcommand{\cvname}[1]{\renewcommand{\givencvname}{#1}}                % name
 \newcommand{\cvjobtitle}[1]{\renewcommand{\givencvjobtitle}{#1}}        % job title
+\newcommand{\cvxing}[1]{\renewcommand{\givencvxing}{#1}}                % xing profile
 
 \newcommand{\givencvname}{REQUIRED!} % name
 \newcommand{\givencvdate}{}          % date
@@ -142,21 +145,20 @@
 \newcommand{\givenprofilepic}{}      % picture
 \newcommand{\givencvsite}{}          % site
 \newcommand{\givencvjobtitle}{}      % job title
+\newcommand{\givencvxing}{}          % xing profile
 
-% MY STUFF
-\newcommand{\cvxing}[1]{\renewcommand{\givencvxing}{#1}}
-\newcommand{\givencvxing}{}
 
 % icon in blue circle; #1 -> icon
 \newcommand*\icon[1]{\tikz[baseline=(char.base)]{
-  \node[shape=circle,draw,inner sep=1pt, fill=mainblue,mainblue,text=white] (char) {#1};}
+  \node[shape=circle,draw,minimum size=18pt,inner sep=1pt, 
+  sidecolor,text=darkgray] (char) {#1};}
 }
 
 % Text in square node with rounded corners; #1 -> text, #2 -> color
 \newcommand*\round[2]{%
-\tikz[baseline=(char.base)]\node[anchor=north west, draw,rectangle,
-  rounded corners, inner sep=1.6pt, minimum size=5.5mm, text height=3.6mm,
-  fill=#2,#2,text=white](char){#1};%
+\tikz[baseline=(char.base)]\node[anchor=north west,draw,rectangle,
+  rounded corners,minimum width=5.5cm,inner sep=1.6pt,text height=4.0mm,
+  fill=#2,#2,text=white] (char) {#1};%
 }
 
 % skill bar graphs
@@ -228,23 +230,25 @@
       % table with icons 
       \begin{tabular}{c @{\hskip 0.2cm} p{5cm}}
         % CV date
-        \ifthenelse{\equal{\givencvdate}{}}{}{\textsc{\Large\icon{\Info}} & \givencvdate\\}
+        \ifthenelse{\equal{\givencvdate}{}}{}{\textsc{\large\icon{\faicon{birthday-cake}}} & \givencvdate\\}
         % CV address
-        \ifthenelse{\equal{\givencvaddress}{}}{}{\textsc{\Large\icon{\Letter}} & \givencvaddress\\}
+        \ifthenelse{\equal{\givencvaddress}{}}{}{\textsc{\large\icon{\faicon{home}}} & \givencvaddress\\}
         % CV phone
-        \ifthenelse{\equal{\givennumberphone}{}}{}{\textsc{\Large\icon{\Telefon}} & \givennumberphone\\}
-        % CV site
-        \ifthenelse{\equal{\givencvsite}{}}{}{\textsc{\Large\icon{\Mundus}} & \href{\givencvsite}{\textcolor{cerulean}\givencvsite}\\}
+        \ifthenelse{\equal{\givennumberphone}{}}{}{\textsc{\Large\icon{\faicon{mobile-phone}}} & \givennumberphone\\}
+        % CV github
+        \ifthenelse{\equal{\givencvsite}{}}{}{\textsc{\large\icon{\faicon{github}}} & \href{https://www.github.com/\givencvsite}{\textcolor{cerulean}\givencvsite}\\}
+        % CV xing
+        \ifthenelse{\equal{\givencvxing}{}}{}{\textsc{\large\icon{\faicon{xing}}} & \href{https://www.xing.com/profile/\givencvxing/cv}{\textcolor{cerulean}\givencvxing}\\}
         % CV mail
-        \ifthenelse{\equal{\givencvmail}{}}{}{\textsc{\large\icon{@}} & \href{mailto:\givencvmail}{\givencvmail}}
+        \ifthenelse{\equal{\givencvmail}{}}{}{\textsc{\large\icon{\faicon{inbox}}} & \href{mailto:\givencvmail}{\givencvmail}}
       \end{tabular}
 
       % about me text
-      \profilesection{About me}{3.2cm}
+      \profilesection{Hallo!}{4.2cm}
       \givenaboutme
 
       % skills with scale
-      \profilesection{Skill}{5cm}
+      \profilesection{Technologien}{2.0cm}
       \givenskill
       \giventextskill
       \noindent
@@ -261,10 +265,10 @@
 % Section Color box %
 %%%%%%%%%%%%%%%%%%%%%
 \newcounter{colorCounter}
-\def\@sectioncolor#1#2#3{
+\def\@sectioncolor<#1>{
   {%
   % Switch between blue and gray
-   \round{#1#2#3}{%
+   \round{#1}{%
       \ifodd\value{colorCounter}%
         mainblue%
       \else%
@@ -280,7 +284,7 @@
   {%
     \LARGE 
     \color{headercolor}%
-    \@sectioncolor #1%
+    \@sectioncolor<#1>%
   }
   \par\vspace{\parskip}
 }
@@ -291,7 +295,7 @@
     \LARGE 
     #1 
     \color{headercolor}%
-    \@sectioncolor #2%
+    \@sectioncolor<#2>%
   }
   \par\vspace{\parskip}
 }
