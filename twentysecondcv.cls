@@ -3,7 +3,7 @@
 % Twenty Seconds Curriculum Vitae in LaTex
 % ****************************************
 % 
-% License: MIT
+% Lise: MIT
 %
 % For further information please visit:
 % https://github.com/spagnuolocarmine/TwentySecondsCurriculumVitae-LaTex
@@ -61,16 +61,6 @@
 \ifbool{icon}{\RequirePackage{fontawesome}}{}
 
 \usetikzlibrary{calc}
-
-%%%% MY STUFF
-%%%%
-% Define custom commands to display a link to course contents
-\newcommand{\coursecontents}[1]{
-	\href{#1}{\faList~Kursinhalte}
-}
-
-% Define custom file paths
-\newcommand{\PathToScannedDocs}{D:/Bibliotheken/Dokumente/Arbeit/Bewerbung/gescannte-Formulare}
 
 
 %%%%%%%%%%
@@ -148,7 +138,7 @@
 \newcommand{\givencvxing}{}          % xing profile
 
 
-% icon in blue circle; #1 -> icon
+% icon in grey circle; #1 -> icon
 \newcommand*\icon[1]{\tikz[baseline=(char.base)]{
   \node[shape=circle,draw,minimum size=18pt,inner sep=1pt, 
   sidecolor,text=darkgray] (char) {#1};}
@@ -156,8 +146,8 @@
 
 % Text in square node with rounded corners; #1 -> text, #2 -> color
 \newcommand*\round[2]{%
-\tikz[baseline=(char.base)]\node[anchor=north west,draw,rectangle,
-  rounded corners,minimum width=5.5cm,inner sep=1.6pt,text height=4.0mm,
+\tikz[baseline=(char.base)]\node[anchor=center,draw,rectangle,
+  rounded corners,minimum width=5.5cm,inner sep=1.6pt,
   fill=#2,#2,text=white] (char) {#1};%
 }
 
@@ -226,6 +216,15 @@
         {\Large\color{black!80}\givencvjobtitle}
       \end{flushright}
       \renewcommand{\arraystretch}{1.6}
+      
+      % profile links (github, xing)
+      \begin{table}[]
+      	\centering
+      	\begin{tabular}{ccc}
+      		\href{https://www.github.com/\givencvsite}{\Large\icon{\faicon{github}}} & \href{https://www.xing.com/profile/\givencvxing/cv}{\large\icon{\faicon{xing}}} &
+      		\href{mailto:\givencvmail}{\large\icon{\faicon{inbox}}}
+      	\end{tabular}
+      \end{table}
 
       % table with icons 
       \begin{tabular}{c @{\hskip 0.2cm} p{5cm}}
@@ -236,11 +235,11 @@
         % CV phone
         \ifthenelse{\equal{\givennumberphone}{}}{}{\textsc{\Large\icon{\faicon{mobile-phone}}} & \givennumberphone\\}
         % CV github
-        \ifthenelse{\equal{\givencvsite}{}}{}{\textsc{\large\icon{\faicon{github}}} & \href{https://www.github.com/\givencvsite}{\textcolor{cerulean}\givencvsite}\\}
+        %\ifthenelse{\equal{\givencvsite}{}}{}{\textsc{\large\icon{\faicon{github}}} & \href{https://www.github.com/\givencvsite}{\textcolor{cerulean}\givencvsite}\\}
         % CV xing
-        \ifthenelse{\equal{\givencvxing}{}}{}{\textsc{\large\icon{\faicon{xing}}} & \href{https://www.xing.com/profile/\givencvxing/cv}{\textcolor{cerulean}\givencvxing}\\}
+        %\ifthenelse{\equal{\givencvxing}{}}{}{\textsc{\large\icon{\faicon{xing}}} & \href{https://www.xing.com/profile/\givencvxing/cv}{\textcolor{cerulean}\givencvxing}\\}
         % CV mail
-        \ifthenelse{\equal{\givencvmail}{}}{}{\textsc{\large\icon{\faicon{inbox}}} & \href{mailto:\givencvmail}{\givencvmail}}
+        %\ifthenelse{\equal{\givencvmail}{}}{}{\textsc{\large\icon{\faicon{inbox}}} & \href{mailto:\givencvmail}{\givencvmail}}
       \end{tabular}
 
       % about me text
