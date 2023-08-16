@@ -20,7 +20,9 @@
 %%%%%%%%%%%%
 % PACKAGES %
 %%%%%%%%%%%%
-\RequirePackage[sfdefault]{ClearSans}
+%\RequirePackage[sfdefault]{ClearSans}
+\RequirePackage[default]{raleway}
+\renewcommand*\familydefault{\sfdefault} 	
 \RequirePackage[T1]{fontenc}
 \RequirePackage{tikz}
 \RequirePackage{xcolor}
@@ -97,7 +99,7 @@
 \fi
 
 \colorlet{textcolor}{gray}
-\colorlet{headercolor}{gray}
+\colorlet{headercolor}{mainblue}
 
 %%%%%%%%%%%%%%%%%%%%%%%%
 % Profile left SideBar %
@@ -151,28 +153,33 @@
   fill=#2,#2,text=white] (char) {#1};%
 }
 
-% skill bar graphs
-\newcommand\skills[1]{
-  \renewcommand{\givenskill}{
-    \noindent
-    \begin{tikzpicture}
-    \foreach [count=\i] \x/\y in {#1}
-    {
-      \draw[fill=maingray,maingray] (0,-\i) rectangle (6,-\i+0.4);
-      \draw[fill=white,mainblue](0,-\i) rectangle (1.2*\y,-\i+0.4);
-      \node [above right ] at (0,-\i+0.4) {\x};
-      \foreach \z in {0,1,2,...,10}
-      {
-        \coordinate (A\z) at ($(0,-\i)+(1.2*\z*0.5cm,0)$) {};
-        \ifodd\z
-            \draw[white] ($(A\z)$) -- ($(A\z)+(0,2.5pt)$);
-        \else
-            \draw[white] ($(A\z)$) -- ($(A\z)+(0,5pt)$);
-        \fi
-      }
-    }
-    \end{tikzpicture}
-  }
+
+% returns minipage width minus two times \fboxsep
+% to keep padding included in width calculations
+% can also be used for other boxes / environments
+\newcommand{\mpwidth}{\linewidth-\fboxsep-\fboxsep}
+%----------------------------------------------------------------------------------------
+%	META SKILL
+%----------------------------------------------------------------------------------------
+
+% Renders a progress-bar to indicate a certain skill in percent.
+% param 1: name of the skill / tech / etc.
+% param 2: level (for example in years)
+% param 3: percent, values range from 0 to 1
+\newcommand\skills[1]{%
+	\renewcommand{\givenskill}{
+	\newcommand\spaceToRight{8pt}
+	
+	\hspace{-4pt}
+	\begin{tikzpicture}[scale=1,rounded corners=2pt,very thin]
+		\foreach [count=\i] \name/\level/\percent in {#1} {
+		\fill [maindarkgray] (0,-\i) rectangle (1\mpwidth-\spaceToRight, -\i+0.15);
+		\fill [mainblue] (0,-\i) rectangle (\percent\mpwidth-\spaceToRight, -\i+0.15);
+		\node [above right] at (0,-\i+0.15) {\name};
+		\node [above left] at (1\mpwidth-\spaceToRight,-\i+0.15) {\level};
+	} % end for each
+	\end{tikzpicture}%
+}
 }
 
 % text style skills
@@ -181,9 +188,9 @@
     \renewcommand{\giventextskill}{
     \begin{flushleft}
     \noindent
-    \foreach [count=\i] \x/\y in {#1}
+    \foreach \skill in {#1}
     {
-      \x$ \star $\y
+      \tikz[baseline]\node[anchor=base,draw,fill=gray,sidecolor,text=mainblue,rounded corners,inner xsep=1ex,inner ysep =0.75ex,text height=1.5ex,text depth=.25ex]{\skill};
     }
     \end{flushleft}
   }
@@ -222,7 +229,7 @@
       	\centering
       	\begin{tabular}{ccc}
       		\href{https://www.github.com/\givencvsite}{\Large\icon{\faicon{github}}} & \href{https://www.xing.com/profile/\givencvxing/cv}{\large\icon{\faicon{xing}}} &
-      		\href{mailto:\givencvmail}{\large\icon{\faicon{inbox}}}
+      		\href{mailto:\givencvmail}{\large\icon{\faicon{send}}}
       	\end{tabular}
       \end{table}
 
@@ -231,7 +238,7 @@
         % CV date
         \ifthenelse{\equal{\givencvdate}{}}{}{\textsc{\large\icon{\faicon{birthday-cake}}} & \givencvdate\\}
         % CV address
-        \ifthenelse{\equal{\givencvaddress}{}}{}{\textsc{\large\icon{\faicon{home}}} & \givencvaddress\\}
+        \ifthenelse{\equal{\givencvaddress}{}}{}{\textsc{\large\icon{\faicon{map-marker}}} & \givencvaddress\\}
         % CV phone
         \ifthenelse{\equal{\givennumberphone}{}}{}{\textsc{\Large\icon{\faicon{mobile-phone}}} & \givennumberphone\\}
         % CV github
@@ -243,17 +250,20 @@
       \end{tabular}
 
       % about me text
-      \profilesection{Hallo!}{4.2cm}
+      \profilesection{Hallo!}{2cm}
+      \newline
       \givenaboutme
 
       % skills with scale
-      \profilesection{Technologien}{2.0cm}
+      \profilesection{Technologien}{2cm}
       \givenskill
+      
+      \profilesection{Stärken}{2cm}
       \giventextskill
       \noindent
       \scriptsize
       \noindent
-      (*)[The skill scale is from 0 (Fundamental Awareness) to 6 (Expert).]
+      
 
     \end{flushleft}
   \end{textblock}
