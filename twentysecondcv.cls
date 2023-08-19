@@ -229,7 +229,7 @@
       	\centering
       	\begin{tabular}{ccc}
       		\href{https://www.github.com/\givencvsite}{\Large\icon{\faicon{github}}} & \href{https://www.xing.com/profile/\givencvxing/cv}{\large\icon{\faicon{xing}}} &
-      		\href{mailto:\givencvmail}{\large\icon{\faicon{send}}}
+      		\href{mailto:\givencvmail}{\large\icon{\faicon{envelope}}}
       	\end{tabular}
       \end{table}
 
@@ -388,7 +388,6 @@
 \RequirePackage[left=7.3cm,top=0.1cm,right=0.5cm,bottom=0.2cm,nohead,nofoot]{geometry}
 \RequirePackage{hyperref}
 
-%% MY STUFF
 \newenvironment{changemargin}[2]{%
 \begin{list}{}{%
 \setlength{\topsep}{0pt}%
